@@ -53,9 +53,20 @@
         <option value="Vip">Vip</option>
     </select>
     <br><br>
+    <input type="button" name="total" value="Thanh Toán" onclick="totalSum()">
+
     <p id="Total"></p>
 </form>
 <script>
+    function totalSum() {
+        let price= document.getElementById("typeOfService").value==="Room"?
+            100: document.getElementById("typeOfService").value==="House"?
+                300:500;
+        console.log(price);
+        console.log(1-parseInt(document.getElementById("discount").value)/100);
+        let total=price*parseInt(document.getElementById("rentDays").value)*((1-parseInt(document.getElementById("discount").value)/100));
+        document.getElementById("Total").innerHTML = "Tổng thanh toán: "+total;
+    }
 
 </script>
 </body>
