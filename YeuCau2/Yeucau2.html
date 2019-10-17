@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tài liệu</title>
+</head>
+<body>
+<script>
+    let name= "Lê Văn A";
+    let email="Levana@gmail.com";
+    let id="123456789";
+    let birthday= "6/9/1994";
+    let address= "Đà Nẵng";
+    let typeCustomer= "Diamond";
+    let discount=10;
+    let numberOfAccompanying=2;
+    let typeRoom="Business";
+    let rentDays = 10;
+    let typeService= "Villa";
+    let moneyPerDay= typeService==="Room"?
+        100: typeService==="House"?
+            300:500;
+    let menu= prompt("1.Hiển thị thông tin khách hàng \n2.Thay đổi thông tin khách hàng \n3.Thanh toán cho khách hàng");
+
+    switch (menu) {
+        case '1':show(); break;
+        case '2':edit(); break;
+        case '3':total();break;
+        default:
+            alert("Thất bại ╥﹏╥")
+    }
+
+
+    function show() {
+        let message = "Tên: "+ name+"\n";
+        message+= "Email: "+email+"\n";
+        message+= "CMND: "+id+"\n";
+        message+= "Ngày tháng năm sinh: "+birthday+"\n";
+        message+= "Địa chỉ: "+address+"\n";
+        message+= "Cấp: "+typeCustomer+"\n";
+        message+= "Giảm giá: "+discount+"%\n";
+        message+= "Số người đi cùng: "+numberOfAccompanying+"\n";
+        message+= "Loại phòng: "+typeRoom+"\n";
+        message+= "Số ngày thuê: "+rentDays+"\n";
+        message+= "Dịch vụ: "+typeService+"\n";
+        moneyPerDay= typeService==="Room"?
+            100: typeService==="House"?
+                300:500;
+        message+= "Tiền phòng: "+moneyPerDay+"$/1 ngày";
+        alert(message)
+    }
+    function edit() {
+        let menu= prompt("Thay đổi thông tin nào:\n1.Tên\n2.Email\n3.CMND\n4.Ngày tháng năm sinh\n5.địa chỉ\n6.Cấp\n7.Giảm giá\n8.Số người đi cùng\n9.Loại phòng\n10.Số ngày thuê\n11.Loại dịch vụ");
+        switch (menu) {
+            case '1':
+                name=prompt("Tên mới là");break;
+            case '2':
+                email=prompt("Email mới là");break;
+            case '3':
+                id=prompt("CMND mới là");break;
+            case '4':
+                birthday=prompt("Sinh nhật mới là");break;
+            case '5':
+                address=prompt("Địa Chỉ mới là");break;
+            case '6':
+                typeCustomer=prompt("Cấp bậc mới là");break;
+            case '7':
+                discount=parseInt(prompt("Giảm giá mới là"));break;
+            case '8':
+                numberOfAccompanying=parseInt( prompt("Số lượng người đi cùng mới là"));break;
+            case '9':
+                typeRoom=prompt("Loại phòng mới là");break;
+            case '10':
+                rentDays=parseInt(prompt("Số ngày thuê mới là"));break;
+            case '11':
+                typeService=prompt("Dịch vụ mới là trị mới là");break;
+            default:
+                alert("Thất bại ╥﹏╥")
+        }
+        if(parseInt(menu)<=11) show();
+    }
+    function total() {
+        let total= moneyPerDay*rentDays*(1-discount/100);
+        let currentYear = new Date().getFullYear();
+        let birthYear=  new Date(birthday).getFullYear();
+        let age= currentYear-birthYear;
+        console.log(age);
+        address==='Đà Nẵng'? total-=20:
+            address==='Huế'? total-=10:
+                address==='Quảng Nam'? total-=5:total;
+        rentDays>7? total-=30:
+            rentDays>=5? total-=20:
+                rentDays>=2? total-=10: total;
+        typeCustomer==='Diamond'?total-=15:
+            typeCustomer==='Platium'?total-=10:
+                typeCustomer==='Gold'?total-=5:
+                    typeCustomer==='Silver'? total-=2:
+                        total;
+        address==='Đà Nẵng'?
+            age>30? total-=2:
+                age>=20? total-=1:
+                    total:total;
+
+        alert("Tổng thanh toán phải trả là "+total)
+    }
+</script>
+</body>
+</html>
