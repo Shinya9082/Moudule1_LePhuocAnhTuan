@@ -99,17 +99,13 @@
             let end=name.indexOf(' ');
             if(end!==-1){
                 let str= name.substring(0,end);
-                str=str.toUpperCase();
-                temp+=str.substr(0,1);
-                str=str.toLowerCase();
-                temp+=str.substring(1,str.length);
+                temp+=str[0].toUpperCase();
+                temp+=str.substring(1,str.length).toLowerCase()+' ';
                 name=name.substring(end,name.length);
             }
             else{
-                name=name.toUpperCase();
-                temp+=name.substr(0,1);
-                name=name.toLowerCase();
-                temp+=name.substring(1,name.length);
+                temp+=name[0].toUpperCase();
+                temp+=name.substring(1,name.length).toLowerCase();
                 name="";
             }
         }
