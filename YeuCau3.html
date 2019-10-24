@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Khách </title>
+</head>
+<body>
+<form>
+    <label>Tên:</label>
+    <input type="text" name="textName" id="name" value="Le phuoc ANH tUAN">
+    <br><br>
+    <label>CMND:</label>
+    <input type="text" name="textID" id="id" value="201201201" >
+    <br><br>
+    <label>Ngày tháng năm sinh:</label>
+    <input type="text" name="textDayOfBirth" id="Dob" value="20/10/1990">
+    <br><br>
+    <label>Email:</label>
+    <input type="text" name="textEmail" id="email" value="abc@abc.com">
+    <br><br>
+    <label>Địa chỉ:</label>
+    <input type="text" name="textAddress" id="address" >
+    <br><br>
+    <label>Khách:</label>
+    <select id="typeOfCustomer">
+        <option value="Member" selected>Member</option>
+        <option value="Silver">Silver</option>
+        <option value="Gold">Gold</option>
+        <option value="Platinum">Platinum</option>
+        <option value="Diamond">Diamond</option>
+    </select>
+    <br><br>
+    <label>Giảm :</label>
+    <input type="text" name="textDiscount" id="discount" >%
+    <br><br>
+    <label>Số lượng đi cùng :</label>
+    <input type="text" name="textAdditionPeople" id="additionPeople" >
+    <br><br>
+    <label>Số ngày thuê:</label>
+    <input type="text" name="textRentDay" id="rentDays" >
+    <br><br>
+    <label>Loại dịch vụ</label>
+    <select id="typeOfService">
+        <option value="Room" selected>Room</option>
+        <option value="House">House</option>
+        <option value="Villa">Villa</option>
+    </select>
+    <br><br>
+    <label>Loại phòng</label>
+    <select id="typeOfRoom">
+        <option value="Normal" selected>Normal</option>
+        <option value="Business">Business</option>
+        <option value="Vip">Vip</option>
+    </select>
+    <br><br>
+    <input type="button" name="total" value="Thanh Toán" onclick="totalSum()">
+
+    <p id="Total"></p>
+</form>
+<script>
+    function checkEmail() {
+        let email=document.getElementById("email").value;
+        let invalidChar =['&','=','_',"'",'-','+',',','<','>','.','"',];
+        let at= email.indexOf("@");
+        let dot= email.lastIndexOf(".");
+        let blank=email.indexOf(' ');
+        if(blank===-1){                                                 //Kiem tra blank
+            if (at===email.lastIndexOf("@")&&at>0){                      //Sai dinh dang @
+                if(dot<email.length-1&&dot>0&&dot>(at+1)){                                 //Kiem tra .
+                    let array=email.split('',at);                       //Kiem tra ky tu dac biet
+                    for(let i=0;i<array.length;i++){
+                        if(array[i]==="."&&array[i-1]===".")
+                            return false;
+                        if (invalidChar.includes(array[i]))
+                            return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    function checkDOB() {
+        let day= document.getElementById('Dob').value;
+        //let currentTime= new Date();
+        return (day.indexOf('/')===2&&day.lastIndexOf('/')===5);
+    }
+    function checkNum(temp) {
+        return temp !=='' && !isNaN(temp) && !temp.includes(' ') && !temp.includes('-');
+    }
+    function checkName(name){
+        if(!name.includes(' ')){
+            return name;
+        }
+        let temp="";
+        while(name!==''){
+            name=name.trim();
+            let end=name.indexOf(' ');
+            if(end!==-1){
+                let str= name.substring(0,end);
+                str=str.toUpperCase();
+                temp+=str.substr(0,1);
+                str=str.toLowerCase();
+                temp+=str.substring(1,str.length);
+                name=name.substring(end,name.length);
+            }
+            else{
+                name=name.toUpperCase();
+                temp+=name.substr(0,1);
+                name=name.toLowerCase();
+                temp+=name.substring(1,name.length);
+                name="";
+            }
+        }
+        return temp;
+    }
+    function totalSum() {
+        //console.log(checkEmail());
+        document.getElementById("name").value=checkName(document.getElementById("name").value);
+        while(!checkEmail()){
+            alert("Email không đúng\nHãy nhập lại ví dụ:abc@abc.abc");
+            document.getElementById("email").value=prompt("Email:")
+        }
+        while (!checkNum(document.getElementById("id").value)) {
+            alert("CMND không đúng\nHãy nhập lại ví dụ:201201201");
+            document.getElementById("id").value=prompt("CMND:")
+        }
+        while(!checkDOB()){
+            alert("Nhập sai\nHãy nhập lại ví dụ:20/10/1990");
+            document.getElementById("Dob").value=prompt("Ngày tháng năm sinh");
+        }
+       //Kt discount
+        while(!checkNum(document.getElementById("discount").value)||parseInt(document.getElementById("discount").value)>100){
+            alert("Nhập sai");
+            document.getElementById("discount").value=prompt("Giảm bao nhiêu")
+        }
+        //KT nguoi
+        while(!checkNum(document.getElementById("additionPeople").value)){
+            alert("Nhập sai");
+            document.getElementById("additionPeople").value=prompt("Cùng đi theo bao nhiêu người")
+        }
+        //Kt ngay thue
+        while(!checkNum(document.getElementById("rentDays").value)||parseInt(document.getElementById("rentDays").value)===0){
+            alert("Nhập sai");
+            document.getElementById("rentDays").value=prompt("Số ngày ở lại")
+        }
+
+        let price= document.getElementById("typeOfService").value==="Room"?
+            100: document.getElementById("typeOfService").value==="House"?
+                300:500;
+        // console.log(price);
+        //console.log(1-parseInt(document.getElementById("discount").value)/100);
+        let total=price*parseInt(document.getElementById("rentDays").value)*((1-parseInt(document.getElementById("discount").value)/100));
+        document.getElementById("Total").innerHTML = "Tổng thanh toán: "+total;
+    }
+
+</script>
+</body>
+</html>
