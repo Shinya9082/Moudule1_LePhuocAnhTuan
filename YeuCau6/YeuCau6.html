@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <script src="Customer.js"></script>
+</head>
+<body>
+<script>
+    let ListCustomer=[];
+    displayMainMenu();
+    function displayMainMenu() {
+        let choose= prompt(
+            "1.Add New Customer\n" +
+            "2.Display Information Center\n" +
+            "3.Display total pay of customer\n" +
+            "4.Edit Information Customer\n" +
+            "5.Delete Customer\n6.Exit");
+        switch (choose) {
+            case '1':
+                addNewCustomer();
+                break;
+            case '2':
+                displayCustomers();
+                break;
+            case '3':
+                displayTotalPay();
+                break;
+            case '4':
+                editCustomer();
+                break;
+            case '5':
+                deleteCustomer();
+                break;
+            case '6':
+                break;
+            default:
+                displayMainMenu();
+        }
+    }
+    function listCustomer() {
+        let text='';
+        for (let i=0;i<ListCustomer.length;i++){
+            text+= (i+1)+".Name: "+ListCustomer[i].getName()+" ID: "+ListCustomer[i].getID()+"\n";
+        }
+        return text;
+    }
+    function addNewCustomer() {
+        let customer= new Customer();
+        ListCustomer.push(customer);
+        console.log(ListCustomer);
+        displayMainMenu();
+    }
+    function displayCustomers() {
+        let choose= parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"));
+        if (choose > ListCustomer.length +1) {
+                displayCustomers();
+        } else{
+            if (choose===ListCustomer.length+1){
+                displayMainMenu();
+            }
+            alert(ListCustomer[choose-1].displayInformationCustomer());
+        }
+        displayMainMenu();
+    }
+    function displayTotalPay() {
+        let choose= parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"));
+        if (choose > ListCustomer.length +1) {
+            displayTotalPay();
+        } else{
+            if (choose===ListCustomer.length+1){
+                displayMainMenu();
+            }
+            alert("Total price after discount is: "+ListCustomer[choose-1].getPrice())
+        }
+        displayMainMenu();
+    }
+
+    function editCustomer() {
+        let choose= parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"));
+        if (choose > ListCustomer.length +1) {
+            editCustomer();
+        } else{
+            if (choose===ListCustomer.length+1){
+                displayMainMenu();
+            }
+            editCustomerInfo(choose-1);
+            alert("Customer edited");
+        }
+        displayMainMenu();
+    }
+    function editCustomerInfo(CustomerNumber) {
+        let choose= prompt("Choose:\n"+ListCustomer[CustomerNumber].displayInformationCustomer()+'\n12.Back');
+        switch (choose) {
+            case '1':
+                ListCustomer[CustomerNumber].setName(prompt("Enter new name:"));
+                break;
+            case '2':
+                ListCustomer[CustomerNumber].setID(prompt("Enter new id"));
+                break;
+            case '3':
+                ListCustomer[CustomerNumber].setEmail(prompt("Enter new email"));
+                break;
+            case '4':
+                ListCustomer[CustomerNumber].setBirthDay(prompt("Enter new birthday:"));
+                break;
+            case '5':
+                ListCustomer[CustomerNumber].setAddress(prompt("Enter new address:"));
+                break;
+            case '6':
+                ListCustomer[CustomerNumber].setTypeCustomer(prompt("Enter new type of Customer"));
+                break;
+            case '7':
+                ListCustomer[CustomerNumber].setDiscount(prompt("Enter new discount"));
+                break;
+            case '8':
+                ListCustomer[CustomerNumber].setTypeRoom(prompt("Enter new type of room"));
+                break;
+            case '9':
+                ListCustomer[CustomerNumber].setRentDays(prompt("Enter new rent days"));
+                break;
+            case '10':
+                ListCustomer[CustomerNumber].setAccompanyPeople(prompt("Enter Accompany People"));
+                break;
+            case '11':
+                ListCustomer[CustomerNumber].setTypeService(prompt("Enter new type of Service"));
+                break;
+            case '12':
+                editCustomer();
+                break;
+            default: editCustomerInfo(CustomerNumber);
+        }
+    }
+    function deleteCustomer() {
+        let choose= parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"));
+        if (choose > ListCustomer.length +1) {
+            deleteCustomer();
+        } else{
+            if (choose===ListCustomer.length+1){
+                displayMainMenu();
+            }
+            deleteCustomerInfo(choose-1);
+        }
+        displayMainMenu();
+
+    }
+    function deleteCustomerInfo(CustomerNumber) {
+        let choose=0;
+        while (choose!==1&&choose!==2) {
+            choose=parseInt(prompt("Do you want do delete\n" +
+                "Name: "+ListCustomer[CustomerNumber].getName()+"ID: "+ListCustomer[CustomerNumber].getID()+
+                "\n1.Yes\n2.No"))
+        }
+        if (choose===1){
+            for(let i=CustomerNumber;i<ListCustomer.length;i++){
+                if(i!==ListCustomer.length-1)
+                    ListCustomer[i]=ListCustomer[i+1];
+            }
+            ListCustomer.pop();
+            alert("Delete complete");
+            displayMainMenu();
+        }
+        displayMainMenu();
+    }
+</script>
+</body>
+</html>
