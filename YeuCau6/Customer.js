@@ -1,15 +1,15 @@
 function Customer() {
-    this.setName(prompt("Enter Customer name")) ;
-    this.setID(prompt("Enter ID"));
-    this.setEmail(prompt("Enter Email "));
-    this.setBirthDay(prompt("Enter birthday"));
-    this.setAddress(prompt("Enter address"));
-    this.setTypeCustomer(prompt("Enter type customer"));
-    this.setDiscount(prompt("Enter discount"));
-    this.setTypeRoom(prompt("Enter type Room"));
-    this.setRentDays( prompt("Enter rent day"));
-    this.setAccompanyPeople(prompt("Enter Accompany People"));
-    this.setTypeService(prompt("Enter Type Service"));
+    // this.setName(prompt("Enter Customer name")) ;
+    // this.setID(prompt("Enter ID"));
+    // this.setEmail(prompt("Enter Email "));
+    // this.setBirthDay(prompt("Enter birthday"));
+    // this.setAddress(prompt("Enter address"));
+    // this.setTypeCustomer(prompt("Enter type customer"));
+    // this.setDiscount(prompt("Enter discount"));
+    // this.setTypeRoom(prompt("Enter type Room"));
+    // this.setRentDays( prompt("Enter rent day"));
+    // this.setAccompanyPeople(prompt("Enter Accompany People"));
+    // this.setTypeService(prompt("Enter Type Service"));
 }
 Customer.prototype.displayInformationCustomer=function () {
     return "1.Name: " + this.getName() +
@@ -40,28 +40,27 @@ Customer.prototype.getEmail=function () {
     return this.email;
 };
 Customer.prototype.setEmail=function (email) {
-    let re1= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
-    while(!re1.test(email)){
-        email = prompt("Incorrect email!! Please correct email Ex:aba@abc.abc ");
-    }
+    // let re1= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
+    // while(!re1.test(email)){
+    //     email = prompt("Incorrect email!! Please correct email Ex:aba@abc.abc ");
+    // }
     this.email=email;
 };
 Customer.prototype.getBirthday=function () {
     return this.birthday;
 };
 Customer.prototype.setBirthDay=function (birthday) {
-    let dateTime = new RegExp("\\b(\\d{1,2})/(\\d{1,2})/(\\d{4})\\b") ;
-    while (!dateTime.test(birthday)||!checkDate()) {
-        birthday=prompt("Incorrect Birthday setting\nEx:dd/mm/yyyy")
-    }
-
-    function checkDate() {
-        let match = dateTime.exec(birthday);
-        return !(match[3] < 1900 || match[3] > 2019 || match[2]>12 ||match[2] <1|| match[1]>31 || match[1]<1);
-    }
+    // let dateTime = new RegExp("\\b(\\d{1,2})/(\\d{1,2})/(\\d{4})\\b") ;
+    // while (!dateTime.test(birthday)||!checkDate()) {
+    //     birthday=prompt("Incorrect Birthday setting\nEx:dd/mm/yyyy")
+    // }
+    //
+    // function checkDate() {
+    //     let match = dateTime.exec(birthday);
+    //     return !(match[3] < 1900 || match[3] > 2019 || match[2]>12 ||match[2] <1|| match[1]>31 || match[1]<1);
+    // }
     this.birthday=birthday;
 };
-
 Customer.prototype.getAddress=function () {
     return this.address;
 };

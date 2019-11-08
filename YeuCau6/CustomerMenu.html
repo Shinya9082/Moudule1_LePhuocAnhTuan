@@ -47,12 +47,48 @@
     }
     function addNewCustomer() {
         let customer= new Customer();
+        let name,id,email,birthDay,address,typeCustomer,discount,typeroom,rentDays,accomPeople,typeService;
+        do{
+            name =prompt('Enter Name');
+        } while (!isValidateName(name));
+        customer.setName(fixName(name));
+        do {
+            id = prompt("Enter ID: (must have 9 digits)")
+        }while (!isValidateId(id));
+        customer.setID(parseInt(id));
+        do{
+            email= prompt('Enter Email Ex: abc@gmail.com');
+        }while (!isValidateEmail(email));
+        customer.setEmail(email);
+        do{
+            birthDay= prompt('Enter Birthday DD/MM/YYYY (1900->now)')
+        }while (!isValidateBirthday(birthDay));
+        customer.setBirthDay(birthDay);
+        customer.setAddress(prompt('Enter address '));
+        customer.setTypeCustomer(prompt('Enter type of Customer'));
+        do {
+            discount=prompt('Enter discount:');
+        }while (!isNumber(discount)||parseInt(discount)>100);
+        customer.setDiscount(parseInt(discount));
+        customer.setTypeRoom(prompt('Enter type room'));
+        do {
+            rentDays=prompt('Enter rent days:')
+        }while (!isNumber(rentDays));
+        customer.setRentDays(rentDays);
+        do{
+            accomPeople= prompt('How many people go with:');
+        }while (!isNumber(accomPeople));
+        customer.setAccompanyPeople(accomPeople);
+        customer.setTypeService(prompt('Enter type service'));
         ListCustomer.push(customer);
-        console.log(ListCustomer);
         displayMainMenu();
     }
     function displayCustomers() {
-        let choose= parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"));
+        let choose;
+        do {
+            choose=parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"))
+            console.log()
+        }while (choose==null);
         if (choose > ListCustomer.length +1) {
                 displayCustomers();
         } else{
@@ -75,9 +111,11 @@
         }
         displayMainMenu();
     }
-
     function editCustomer() {
-        let choose= parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"));
+        let choose;
+        do {
+            choose=parseInt(prompt(listCustomer()+(ListCustomer.length+1)+".Back"))
+        }while (choose==null);
         if (choose > ListCustomer.length +1) {
             editCustomer();
         } else{
@@ -93,16 +131,32 @@
         let choose= prompt("Choose:\n"+ListCustomer[CustomerNumber].displayInformationCustomer()+'\n12.Back');
         switch (choose) {
             case '1':
-                ListCustomer[CustomerNumber].setName(prompt("Enter new name:"));
+                let name;
+                do{
+                    name =prompt('Enter Name');
+                } while (!isValidateName(name));
+                ListCustomer[CustomerNumber].setName(fixName(name));
                 break;
             case '2':
-                ListCustomer[CustomerNumber].setID(prompt("Enter new id"));
+                let id;
+                do {
+                    id = prompt("Enter ID: (must have 9 digits)")
+                }while (!isValidateId(id));
+                ListCustomer[CustomerNumber].setID(id);
                 break;
             case '3':
-                ListCustomer[CustomerNumber].setEmail(prompt("Enter new email"));
+                let email;
+                do{
+                    email= prompt('Enter Email Ex: abc@gmail.com');
+                }while (!isValidateEmail(email));
+                ListCustomer[CustomerNumber].setEmail(email);
                 break;
             case '4':
-                ListCustomer[CustomerNumber].setBirthDay(prompt("Enter new birthday:"));
+                let birthDay;
+                do{
+                    birthDay= prompt('Enter Birthday DD/MM/YYYY (1990->now)')
+                }while (!isValidateBirthday(birthDay));
+                ListCustomer[CustomerNumber].setBirthDay(birthDay);
                 break;
             case '5':
                 ListCustomer[CustomerNumber].setAddress(prompt("Enter new address:"));
@@ -111,16 +165,28 @@
                 ListCustomer[CustomerNumber].setTypeCustomer(prompt("Enter new type of Customer"));
                 break;
             case '7':
-                ListCustomer[CustomerNumber].setDiscount(prompt("Enter new discount"));
+                let discount;
+                do {
+                    discount=prompt('Enter discount:');
+                }while (!isNumber(discount)&&parseInt(discount)<=100);
+                ListCustomer[CustomerNumber].setDiscount(discount);
                 break;
             case '8':
                 ListCustomer[CustomerNumber].setTypeRoom(prompt("Enter new type of room"));
                 break;
             case '9':
-                ListCustomer[CustomerNumber].setRentDays(prompt("Enter new rent days"));
+                let rentDays;
+                do {
+                    rentDays=prompt('Enter rent days:')
+                }while (!isNumber(rentDays));
+                ListCustomer[CustomerNumber].setRentDays(rentDays);
                 break;
             case '10':
-                ListCustomer[CustomerNumber].setAccompanyPeople(prompt("Enter Accompany People"));
+                let accomPeople;
+                do{
+                    accomPeople= prompt('How many people go with:');
+                }while (!isNumber(accomPeople));
+                ListCustomer[CustomerNumber].setAccompanyPeople(accomPeople);
                 break;
             case '11':
                 ListCustomer[CustomerNumber].setTypeService(prompt("Enter new type of Service"));
@@ -161,6 +227,47 @@
             displayMainMenu();
         }
         displayMainMenu();
+    }
+    function isValidateEmail(str) {
+        let emailReg=/^[a-zA-Z0-9]+[a-zA-Z0-9]*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)$/;
+        return emailReg.test(str);
+    }
+    function isValidateBirthday(str) {
+        let dateTimeReg=/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(?=19|20[01]\d)\d{4}$/;
+        return dateTimeReg.test(str)
+    }
+    function isValidateId(str) {
+        let idReg=/^\d{9}$/;
+        return idReg.test(str);
+    }
+    function isNumber(str) {
+        let numberReg=/^\d+$/;
+        return numberReg.test(str);
+    }
+    function isValidateName(str) {
+        let regName=/^(?:(?:\p{L})(?:\p{L}*))(?: +\p{L}+)+$/u;
+        console.log(name);
+        console.log(regName.test(str));
+        return regName.test(str);
+    }
+    function fixName(name) {
+        let temp="";
+        while(name!==''){
+            name=name.trim();
+            let end=name.indexOf(' ');
+            if(end!==-1){
+                let str= name.substring(0,end);
+                temp+=str[0].toUpperCase();
+                temp+=str.substring(1,str.length).toLowerCase()+' ';
+                name=name.substring(end,name.length);
+            }
+            else{
+                temp+=name[0].toUpperCase();
+                temp+=name.substring(1,name.length).toLowerCase();
+                name="";
+            }
+        }
+        return temp;
     }
 </script>
 </body>
